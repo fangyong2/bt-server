@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csair.mapper.TbMapper">
+  <resultMap id="BaseResultMap" type="com.csair.model.Tb">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="phonecode" jdbcType="VARCHAR" property="phonecode" />
+    <result column="endoncode" jdbcType="VARCHAR" property="endoncode" />
+    <result column="durationofcall" jdbcType="INTEGER" property="durationofcall" />
+    <result column="telephoneexpenses" jdbcType="REAL" property="telephoneexpenses" />
+    <result column="preference" jdbcType="REAL" property="preference" />
+    <result column="basestation" jdbcType="VARCHAR" property="basestation" />
+    <result column="typeofservice" jdbcType="VARCHAR" property="typeofservice" />
+    <result column="startime" jdbcType="TIMESTAMP" property="startime" />
+    <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+  </resultMap>
+
+  <!--根据基站编码查询总记录数开始-->
+  <select id="total" resultType="java.lang.Integer" parameterType="Map">
+    SELECT count(*) as total FROM tb
+      <where>
+          <if test="phonecode!=null and phonecode!=''"> phonecode=#{phonecode}</if>
+          <if test="startime!=null and startime!=''">
+              <![CDATA[  and DATE_FORMAT(startime, '%Y-%m-%d %T') >= DATE_FORMAT(#{startime}, '%Y-%m-%d %T')    ]]>
+          </if>
+          <if test="endtime!=null and endtime!=''">
+              <![CDATA[  and DATE_FORMAT(endtime, '%Y-%m-%d %T') < DATE_FORMAT(#{endTime}, '%Y-%m-%d %T')    ]]>
+          </if>
+      </where>
+  </select>
+  <!--根据基站编码查询总记录数结束-->
+
+  <!--模糊查询开始-->
+  <select id="selectByFy" resultType="com.csair.model.Tb" parameterType="Map">
+    SELECT * FROM tb
+    <if test="a!=null">
+      <where>
+          <if test="phonecode!=null and phonecode!=''"> phonecode=#{phonecode}</if>
+          <if test="startime!=null and startime!=''">
+              <![CDATA[  and DATE_FORMAT(startime, '%Y-%m-%d %T') >= DATE_FORMAT(#{startime}, '%Y-%m-%d %T')    ]]>
+          </if>
+          <if test="endtime!=null and endtime!=''">
+              <![CDATA[  and DATE_FORMAT(endtime, '%Y-%m-%d %T') < DATE_FORMAT(#{endTime}, '%Y-%m-%d %T')    ]]>
+          </if>
+      </where>
+      LIMIT #{a},#{b}
+    </if>
+  </select>
+  <!--<sql id="Base_Column_List">-->
+    <!--id, phonecode, endoncode, durationofcall, telephoneexpenses, preference, basestation, -->
+    <!--typeofservice, startime, endtime-->
+  <!--</sql>-->
+  <!--<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from tb-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+    <!--delete from tb-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="com.csair.model.Tb">-->
+    <!--insert into tb (id, phonecode, endoncode, -->
+      <!--durationofcall, telephoneexpenses, preference, -->
+      <!--basestation, typeofservice, startime, -->
+      <!--endtime)-->
+    <!--values (#{id,jdbcType=INTEGER}, #{phonecode,jdbcType=VARCHAR}, #{endoncode,jdbcType=VARCHAR}, -->
+      <!--#{durationofcall,jdbcType=INTEGER}, #{telephoneexpenses,jdbcType=REAL}, #{preference,jdbcType=REAL}, -->
+      <!--#{basestation,jdbcType=VARCHAR}, #{typeofservice,jdbcType=VARCHAR}, #{startime,jdbcType=TIMESTAMP}, -->
+      <!--#{endtime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="com.csair.model.Tb">-->
+    <!--insert into tb-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+      <!--<if test="id != null">-->
+        <!--id,-->
+      <!--</if>-->
+      <!--<if test="phonecode != null">-->
+        <!--phonecode,-->
+      <!--</if>-->
+      <!--<if test="endoncode != null">-->
+        <!--endoncode,-->
+      <!--</if>-->
+      <!--<if test="durationofcall != null">-->
+        <!--durationofcall,-->
+      <!--</if>-->
+      <!--<if test="telephoneexpenses != null">-->
+        <!--telephoneexpenses,-->
+      <!--</if>-->
+      <!--<if test="preference != null">-->
+        <!--preference,-->
+      <!--</if>-->
+      <!--<if test="basestation != null">-->
+        <!--basestation,-->
+      <!--</if>-->
+      <!--<if test="typeofservice != null">-->
+        <!--typeofservice,-->
+      <!--</if>-->
+      <!--<if test="startime != null">-->
+        <!--startime,-->
+      <!--</if>-->
+      <!--<if test="endtime != null">-->
+        <!--endtime,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+      <!--<if test="id != null">-->
+        <!--#{id,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="phonecode != null">-->
+        <!--#{phonecode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="endoncode != null">-->
+        <!--#{endoncode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="durationofcall != null">-->
+        <!--#{durationofcall,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="telephoneexpenses != null">-->
+        <!--#{telephoneexpenses,jdbcType=REAL},-->
+      <!--</if>-->
+      <!--<if test="preference != null">-->
+        <!--#{preference,jdbcType=REAL},-->
+      <!--</if>-->
+      <!--<if test="basestation != null">-->
+        <!--#{basestation,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="typeofservice != null">-->
+        <!--#{typeofservice,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="startime != null">-->
+        <!--#{startime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="endtime != null">-->
+        <!--#{endtime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.csair.model.Tb">-->
+    <!--update tb-->
+    <!--<set>-->
+      <!--<if test="phonecode != null">-->
+        <!--phonecode = #{phonecode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="endoncode != null">-->
+        <!--endoncode = #{endoncode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="durationofcall != null">-->
+        <!--durationofcall = #{durationofcall,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="telephoneexpenses != null">-->
+        <!--telephoneexpenses = #{telephoneexpenses,jdbcType=REAL},-->
+      <!--</if>-->
+      <!--<if test="preference != null">-->
+        <!--preference = #{preference,jdbcType=REAL},-->
+      <!--</if>-->
+      <!--<if test="basestation != null">-->
+        <!--basestation = #{basestation,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="typeofservice != null">-->
+        <!--typeofservice = #{typeofservice,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="startime != null">-->
+        <!--startime = #{startime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="endtime != null">-->
+        <!--endtime = #{endtime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="com.csair.model.Tb">-->
+    <!--update tb-->
+    <!--set phonecode = #{phonecode,jdbcType=VARCHAR},-->
+      <!--endoncode = #{endoncode,jdbcType=VARCHAR},-->
+      <!--durationofcall = #{durationofcall,jdbcType=INTEGER},-->
+      <!--telephoneexpenses = #{telephoneexpenses,jdbcType=REAL},-->
+      <!--preference = #{preference,jdbcType=REAL},-->
+      <!--basestation = #{basestation,jdbcType=VARCHAR},-->
+      <!--typeofservice = #{typeofservice,jdbcType=VARCHAR},-->
+      <!--startime = #{startime,jdbcType=TIMESTAMP},-->
+      <!--endtime = #{endtime,jdbcType=TIMESTAMP}-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+</mapper>

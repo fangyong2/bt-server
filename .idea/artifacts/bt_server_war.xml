@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="bt-server:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="bt-server.war">
+      <element id="artifact" artifact-name="bt-server:war exploded" />
+    </root>
+  </artifact>
+</component>

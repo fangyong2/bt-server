@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csair.mapper.TpMapper">
+  <resultMap id="BaseResultMap" type="com.csair.model.Tp">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="basestation" jdbcType="VARCHAR" property="basestation" />
+    <result column="traffic_current" jdbcType="INTEGER" property="trafficCurrent" />
+    <result column="traffic_1h" jdbcType="INTEGER" property="traffic1h" />
+    <result column="traffic_2h" jdbcType="INTEGER" property="traffic2h" />
+    <result column="traffic_3h" jdbcType="INTEGER" property="traffic3h" />
+    <result column="traffic_4h" jdbcType="INTEGER" property="traffic4h" />
+    <result column="traffic_5h" jdbcType="INTEGER" property="traffic5h" />
+  </resultMap>
+
+  <!--根据基站编码查询总记录数开始-->
+  <select id="total" resultType="java.lang.Integer" parameterType="Map">
+    SELECT count(*) as total FROM tp
+      <where>
+        <if test="basestation!=null and basestation!=''">basestation=#{basestation}</if>
+      </where>
+  </select>
+  <!--根据基站编码查询总记录数结束-->
+
+  <!--模糊查询开始-->
+  <select id="selectByFy" resultType="com.csair.model.Tp" parameterType="Map">
+    SELECT id, basestation, traffic_current as trafficCurrent, traffic_1h as traffic1h, traffic_2h as traffic2h, traffic_3h as traffic3h, traffic_4h as traffic4h, 
+    traffic_5h as traffic5h FROM tp
+    <if test="a!=null">
+      <where>
+        <if test="basestation!=null and basestation!=''">basestation=#{basestation}</if>
+      </where>
+      LIMIT #{a},#{b}
+    </if>
+  </select>
+  <!--模糊查询结束-->
+  <!--<sql id="Base_Column_List">-->
+    <!--id, basestation, traffic_current, traffic_1h, traffic_2h, traffic_3h, traffic_4h, -->
+    <!--traffic_5h-->
+  <!--</sql>-->
+  <!--<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from tp-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+    <!--delete from tp-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="com.csair.model.Tp">-->
+    <!--insert into tp (id, basestation, traffic_current, -->
+      <!--traffic_1h, traffic_2h, traffic_3h, -->
+      <!--traffic_4h, traffic_5h)-->
+    <!--values (#{id,jdbcType=INTEGER}, #{basestation,jdbcType=VARCHAR}, #{trafficCurrent,jdbcType=INTEGER}, -->
+      <!--#{traffic1h,jdbcType=INTEGER}, #{traffic2h,jdbcType=INTEGER}, #{traffic3h,jdbcType=INTEGER}, -->
+      <!--#{traffic4h,jdbcType=INTEGER}, #{traffic5h,jdbcType=INTEGER})-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="com.csair.model.Tp">-->
+    <!--insert into tp-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+      <!--<if test="id != null">-->
+        <!--id,-->
+      <!--</if>-->
+      <!--<if test="basestation != null">-->
+        <!--basestation,-->
+      <!--</if>-->
+      <!--<if test="trafficCurrent != null">-->
+        <!--traffic_current,-->
+      <!--</if>-->
+      <!--<if test="traffic1h != null">-->
+        <!--traffic_1h,-->
+      <!--</if>-->
+      <!--<if test="traffic2h != null">-->
+        <!--traffic_2h,-->
+      <!--</if>-->
+      <!--<if test="traffic3h != null">-->
+        <!--traffic_3h,-->
+      <!--</if>-->
+      <!--<if test="traffic4h != null">-->
+        <!--traffic_4h,-->
+      <!--</if>-->
+      <!--<if test="traffic5h != null">-->
+        <!--traffic_5h,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+      <!--<if test="id != null">-->
+        <!--#{id,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="basestation != null">-->
+        <!--#{basestation,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="trafficCurrent != null">-->
+        <!--#{trafficCurrent,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic1h != null">-->
+        <!--#{traffic1h,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic2h != null">-->
+        <!--#{traffic2h,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic3h != null">-->
+        <!--#{traffic3h,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic4h != null">-->
+        <!--#{traffic4h,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic5h != null">-->
+        <!--#{traffic5h,jdbcType=INTEGER},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.csair.model.Tp">-->
+    <!--update tp-->
+    <!--<set>-->
+      <!--<if test="basestation != null">-->
+        <!--basestation = #{basestation,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="trafficCurrent != null">-->
+        <!--traffic_current = #{trafficCurrent,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic1h != null">-->
+        <!--traffic_1h = #{traffic1h,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic2h != null">-->
+        <!--traffic_2h = #{traffic2h,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic3h != null">-->
+        <!--traffic_3h = #{traffic3h,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic4h != null">-->
+        <!--traffic_4h = #{traffic4h,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="traffic5h != null">-->
+        <!--traffic_5h = #{traffic5h,jdbcType=INTEGER},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="com.csair.model.Tp">-->
+    <!--update tp-->
+    <!--set basestation = #{basestation,jdbcType=VARCHAR},-->
+      <!--traffic_current = #{trafficCurrent,jdbcType=INTEGER},-->
+      <!--traffic_1h = #{traffic1h,jdbcType=INTEGER},-->
+      <!--traffic_2h = #{traffic2h,jdbcType=INTEGER},-->
+      <!--traffic_3h = #{traffic3h,jdbcType=INTEGER},-->
+      <!--traffic_4h = #{traffic4h,jdbcType=INTEGER},-->
+      <!--traffic_5h = #{traffic5h,jdbcType=INTEGER}-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+</mapper>
